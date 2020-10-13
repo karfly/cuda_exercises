@@ -1,0 +1,20 @@
+sine_calc - calculate linear series of sine on GPU
+
+Purpose: learn the basics of CUDA C programming
+
+Fill the parts of the code marked with "TODO"s to get a fully working sample.
+For CUDA API calls, please refer to the CUDA Reference Manual in doc/.
+
+Correct version of the sample should work like:
+
+$ make
+nvcc -g -O3 -DBLOCK_SIZE=512 sine_calc.cu -o sine_calc
+
+$ ./sine_calc 
+Usage: ./sine_calc <n>
+Where n must be a multiplier of 512
+
+$ ./sine_calc 1024
+n = 1024
+Max diff = 0.000012% @ i = 23: 0.534998 != 0.534998
+
