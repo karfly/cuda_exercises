@@ -17,7 +17,7 @@ __constant__ float M_PI_GPU;
 
 // TODO: Redefine the function to have both host and device
 // implementations (see slide XXX of cuda_intro.pdf)
-float cpu_kernel(float period, int i)
+__host__ __device__ float calc_sin(float period, int i)
 {
     return sinf(2.0f * float(M_PI) / period * float(i));
 } 
@@ -29,7 +29,7 @@ __global__ void gpu_kernel(float period, float* result)
     int i = BLOCK_SIZE * blockIdx.x + threadIdx.x;
     
     // Do the calculations, corresponding to the thread
-    result[i] = sinf(2.0f * float(M_PI_GPU) / period * float(i));
+    result[i] = calc_sin(period, i);
 }
 
 int main(int argc, char* argv[])
@@ -95,7 +95,7 @@ int main(int argc, char* argv[])
     float maxdiff_bad = 0.0f;
     for (int i = 0; i < n; i++)
     {
-        float gold = cpu_kernel(period, i);
+        float gold = calc_sin(period, i);
         float diff = result[i] / gold;
         if (diff != diff) diff = 0;
         else diff = 1.0 - diff;
